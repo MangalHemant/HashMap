@@ -1,3 +1,4 @@
+import java.nio.channels.FileChannel.MapMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,17 @@ public class MyMap<K,V> {
 
     public V get(K key)
     {
-
+        int bucketIndex=getBucketIndex(key);
+        MyNode<K,V> head=bucket.get(bucketIndex);
+        while(head!=null)
+        {
+            if(head.key.equals(key))
+            {
+                return head.value;
+            }
+            head=head.next;
+        }
+       return null;
     }
 
     public void remove(K key)
