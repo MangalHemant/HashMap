@@ -39,10 +39,40 @@ public class MyMap<K,V> {
        newNode.next=head;
        bucket.set(bucketIndex, newNode);
        size++;
+        
+
+       double loadFactor=(1.0*size)/capacity;
+
+       if(loadFactor>0.7)
+       {
+        System.out.println("Rehashing");
+        rehash();
+       }
 
 
        
     }
+
+    private void rehash()
+    {
+        List<MyNode<K,V>> temp=bucket;
+        capacity*=2;
+        bucket=new ArrayList<>();
+        size=0;
+        for(int i=0;i<capacity;i++)
+        {
+            bucket.add(null);
+        }
+        for(int i=0;i<temp.size();i++)
+        {
+            MyNode<K,V> node=temp.get(i);
+            while(node!=null)
+            {
+                put(node.key,node.value);
+                node=node.next;
+            }
+        }
+           }
 
     public V get(K key)
     {
