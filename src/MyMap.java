@@ -11,7 +11,7 @@ public class MyMap<K,V> {
     private final int CURRENT_CAPACITY=5;
 
 
-    void MyMap()
+    public MyMap()
     {
         bucket=new ArrayList<>();
         capacity=CURRENT_CAPACITY;
@@ -23,7 +23,25 @@ public class MyMap<K,V> {
 
     public void put(K key,V value)
     {
+       int bucketIndex=getBucketIndex(key);
+       MyNode<K,V> head=bucket.get(bucketIndex);
+       while(head!=null)
+       {
+        if(head.key.equals(key))
+        {
+            head.value=value;
+            return;
+        }
+        head=head.next;
+       }
+       MyNode<K,V> newNode=new MyNode<K,V>(key, value);
+       head=bucket.get(bucketIndex);
+       newNode.next=head;
+       bucket.set(bucketIndex, newNode);
+       size++;
 
+
+       
     }
 
     public V get(K key)
