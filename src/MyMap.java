@@ -43,7 +43,27 @@ public class MyMap<K,V> {
 
     public void remove(K key)
     {
-
+       int bucketIndex=getBucketIndex(key);
+       MyNode<K,V> head=bucket.get(bucketIndex);
+       MyNode<K,V> prev=null;
+       while(head!=null)
+       {
+          if(head.key.equals(key))
+          {
+            if(prev==null)
+            {
+                bucket.set(bucketIndex, head.next);
+            }
+            else{
+                prev.next=head.next;
+            }
+            size--;
+            break;
+          }
+          prev=head;
+          head=head.next;
+          
+       }
     }
 
     private int getBucketIndex(K key)
