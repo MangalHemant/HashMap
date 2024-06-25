@@ -35,6 +35,12 @@ public class MyMap<K,V> {
 
     }
 
+    private int getBucketIndex(K key)
+    {
+        int hashCode=key.hashCode();
+        return hashCode%capacity;
+    }
+
 
     private class MyNode<K,V>{
         K key;
